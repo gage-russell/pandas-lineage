@@ -1,3 +1,5 @@
+#pandas-lineage
+
 BEWARE: This project is only a couple hours underway. I hope to get some more time dedicated to it next weekend (as of 2022-09-06)
 
 pandas-lineage is intended to extend the functionality of I/O and standard transform operations on a pandas dataframe to emit OpenLineage RunEvents. I am starting just with read/write operations emiting RunEvents with schema facets.
