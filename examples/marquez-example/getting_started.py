@@ -1,7 +1,7 @@
 """
 ```
-cd examples/mock-api-example/
-pyhon mock_api.py
+cd examples/marquez-example/
+source ./start_marquez.sh
 python getting_started.py
 ```
 
@@ -18,4 +18,4 @@ start = job_run.emit_start()
 
 df = read_csv("./mock_csv.csv", job_run=job_run)
 
-complete = job_run.emit_complete
+complete = job_run.emit_complete()

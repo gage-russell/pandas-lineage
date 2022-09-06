@@ -1,3 +1,6 @@
+# Project Specific
+examples/marquez-example/marquez
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

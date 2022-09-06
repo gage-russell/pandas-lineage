@@ -6,6 +6,8 @@ repos:
     rev: 'v0.910-1'  # Use the sha / tag you want to point at
     hooks:
     -   id: mypy
+        args:
+          - "--scripts-are-modules"
 
 #-   repo: https://github.com/pre-commit/mirrors-yapf
 #    rev: 'v0.31.0'  # Use the sha / tag you want to point at
