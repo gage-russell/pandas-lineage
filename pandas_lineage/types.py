@@ -10,6 +10,8 @@ dataset = Dataset(namespace='', name='', facets=facets)
 download = RunEvent(eventType=RunState.OTHER, eventTime=now(), run=run, job=job, producer='', inputs=[dataset])
 client.emit(download)
 ```
+
+***formated with Black***
 """
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -20,8 +22,13 @@ from pandas import DataFrame as PandasDataFrame
 from openlineage.client.run import Job, Run, RunEvent, RunState, InputDataset, Dataset
 from openlineage.client import OpenLineageClient
 from openlineage.client.utils import RedactMixin
-from openlineage.client.facet import BaseFacet, DataSourceDatasetFacet, \
-    DocumentationDatasetFacet, SchemaDatasetFacet, SchemaField
+from openlineage.client.facet import (
+    BaseFacet,
+    DataSourceDatasetFacet,
+    DocumentationDatasetFacet,
+    SchemaDatasetFacet,
+    SchemaField,
+)
 
 
 @dataclass
@@ -29,10 +36,11 @@ class JobRun:
     """
     TODO
     """
+
     run_id: str
     namespace: str
     name: str
-    producer: str = 'pandas-lineage'
+    producer: str = "pandas-lineage"
     run_facets: dict = field(default_factory=dict)
     job_facets: dict = field(default_factory=dict)
 
@@ -42,7 +50,13 @@ class JobRun:
         self.client = OpenLineageClient()
 
     def _emit(self, **kwargs):
-        event = RunEvent(eventTime=datetime.now().isoformat(), run=self.run, job=self.job, producer=self.producer, **kwargs)
+        event = RunEvent(
+            eventTime=datetime.now().isoformat(),
+            run=self.run,
+            job=self.job,
+            producer=self.producer,
+            **kwargs
+        )
         return self.client.emit(event)
 
     def emit_start(self):
@@ -51,8 +65,12 @@ class JobRun:
     def emit_complete(self):
         return self._emit(eventType=RunState.COMPLETE)
 
-    def emit_datasets(self, inputs: List[Dataset] = [], outputs: List[Dataset] = [],
-                      run_state: RunState = RunState.OTHER):
+    def emit_datasets(
+        self,
+        inputs: List[Dataset] = [],
+        outputs: List[Dataset] = [],
+        run_state: RunState = RunState.OTHER,
+    ):
         return self._emit(eventType=run_state, inputs=inputs, outputs=outputs)
 
 
@@ -63,18 +81,34 @@ class PandasDataSet(Dataset):
     """
 
     def __init__(self, job_run: JobRun, facets: dict = {}, *args, **kwargs):
-        super().__init__(namespace=job_run.namespace, name=job_run.name, facets=facets, *args, **kwargs)
+        super().__init__(
+            namespace=job_run.namespace,
+            name=job_run.name,
+            facets=facets,
+            *args,
+            **kwargs
+        )
         self._job_run = job_run
 
     @classmethod
-    def from_pandas(cls, dataframe: PandasDataFrame, job_run: JobRun, facets: dict = {}, *args, **kwargs):
+    def from_pandas(
+        cls,
+        dataframe: PandasDataFrame,
+        job_run: JobRun,
+        facets: dict = {},
+        *args,
+        **kwargs
+    ):
         """
         TODO
         create openlineage Dataset from pandas DataFrame
         """
-        schema_fields = [SchemaField(name, dtype.name) for name, dtype in dataframe.dtypes.to_dict().items()]
+        schema_fields = [
+            SchemaField(name, dtype.name)
+            for name, dtype in dataframe.dtypes.to_dict().items()
+        ]
         facets.update({"schema": SchemaDatasetFacet(fields=schema_fields)})
-        return cls(job_run=job_run, facets=facets, *args, **kwargs)
+        return cls(job_run=job_run, facets=facets, *args, **kwargs)  # type: ignore
 
     def copy(self):
         return copy.deepcopy(self)

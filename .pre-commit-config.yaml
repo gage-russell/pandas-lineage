@@ -7,10 +7,10 @@ repos:
     hooks:
     -   id: mypy
 
--   repo: https://github.com/pre-commit/mirrors-yapf
-    rev: 'v0.31.0'  # Use the sha / tag you want to point at
-    hooks:
-    -   id: yapf
+#-   repo: https://github.com/pre-commit/mirrors-yapf
+#    rev: 'v0.31.0'  # Use the sha / tag you want to point at
+#    hooks:
+#    -   id: yapf
 
 # flake8
 - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -27,3 +27,9 @@ repos:
         # check out their meaning here
         # https://flake8.pycqa.org/en/latest/user/error-codes.html
         - "--ignore=E203,E266,E501,W503,F403,F401,E402"
+
+# black
+- repo: https://github.com/ambv/black
+  rev: stable
+  hooks:
+  - id: black
