@@ -1,6 +1,7 @@
 """
 ```
 cd examples/mock-api-example/
+pyhon mock_api.py
 python getting_started.py
 ```
 
