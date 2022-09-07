@@ -80,13 +80,9 @@ class PandasDataSet(Dataset):
     TODO:
     """
 
-    def __init__(self, job_run: JobRun, facets: dict = {}, *args, **kwargs):
+    def __init__(self, name: str, job_run: JobRun, facets: dict = {}, *args, **kwargs):
         super().__init__(
-            namespace=job_run.namespace,
-            name=job_run.name,
-            facets=facets,
-            *args,
-            **kwargs
+            namespace=job_run.namespace, name=name, facets=facets, *args, **kwargs
         )
         self._job_run = job_run
 
