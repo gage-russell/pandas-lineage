@@ -42,7 +42,7 @@ def read_csv(
 
     dataframe = pandas_read_csv(filepath_or_buffer, *args, **kwargs)
     openlineage_dataset = PandasDataSet.from_pandas(
-        dataframe=dataframe, name=dataset_name, job_run=job_run
+        dataframe=dataframe, dataset_name=dataset_name, job_run=job_run
     )
     openlineage_dataset.emit_input()
     return dataframe
