@@ -7,4 +7,4 @@ else
   git clone https://github.com/MarquezProject/marquez
 fi
 cd marquez
-./docker/up.sh -a 8081
+./docker/up.sh
