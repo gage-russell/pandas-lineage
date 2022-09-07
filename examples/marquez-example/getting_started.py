@@ -28,6 +28,6 @@ start = job_run.emit_start()
 # specify dataset_name
 df = read_csv("./mock_csv.csv", dataset_name="test-dataset", job_run=job_run)
 # allow dataset_name to be defaulted to file path
-df = read_csv("./mock_csv.csv", dataset_name="test-dataset", job_run=job_run)
+df = read_csv("./mock_csv.csv", job_run=job_run)
 
 complete = job_run.emit_complete()
