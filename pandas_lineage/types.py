@@ -80,10 +80,12 @@ class PandasDataSet(Dataset):
     TODO:
     """
 
-    def __init__(self, job_run: JobRun, facets: dict = {}, *args, **kwargs):
+    def __init__(
+        self, dataset_name: str, job_run: JobRun, facets: dict = {}, *args, **kwargs
+    ):
         super().__init__(
             namespace=job_run.namespace,
-            name=job_run.name,
+            name=dataset_name,
             facets=facets,
             *args,
             **kwargs
@@ -94,6 +96,7 @@ class PandasDataSet(Dataset):
     def from_pandas(
         cls,
         dataframe: PandasDataFrame,
+        dataset_name: str,
         job_run: JobRun,
         facets: dict = {},
         *args,
@@ -108,7 +111,7 @@ class PandasDataSet(Dataset):
             for name, dtype in dataframe.dtypes.to_dict().items()
         ]
         facets.update({"schema": SchemaDatasetFacet(fields=schema_fields)})
-        return cls(job_run=job_run, facets=facets, *args, **kwargs)  # type: ignore
+        return cls(dataset_name=dataset_name, job_run=job_run, facets=facets, *args, **kwargs)  # type: ignore
 
     def copy(self):
         return copy.deepcopy(self)
