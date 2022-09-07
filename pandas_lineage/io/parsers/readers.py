@@ -39,6 +39,10 @@ def read_csv(
     if not dataset_name:
         if isinstance(filepath_or_buffer, str):
             dataset_name = filepath_or_buffer
+        else:
+            raise TypeError(
+                "filepath_or_buffer must be supplies as a string path or dataset_name is required"
+            )
 
     dataframe = pandas_read_csv(filepath_or_buffer, *args, **kwargs)
     openlineage_dataset = PandasDataSet.from_pandas(
