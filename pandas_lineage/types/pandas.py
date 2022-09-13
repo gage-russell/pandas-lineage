@@ -10,19 +10,6 @@ from pandas._typing import FilePath, WriteBuffer
 
 from pandas_lineage.types.lineage import JobRun, PandasDataSet
 
-# def _lineagedataframe_constructor_with_fallback(*args, **kwargs):
-#     """
-#     A flexible constructor for GeoDataFrame._constructor, which falls back
-#     to returning a DataFrame (if a certain operation does not preserve the
-#     geometry column)
-#     """
-#     df = LineageDataFrame(*args, **kwargs)
-#     geometry_cols_mask = df.dtypes == "geometry"
-#     if len(geometry_cols_mask) == 0 or geometry_cols_mask.sum() == 0:
-#         df = pd.DataFrame(df)
-#
-#     return
-
 
 class LineageSeries(PandasSeries):
     @property
