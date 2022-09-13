@@ -17,5 +17,9 @@ pandas-lineage is intended to extend the functionality of I/O and standard trans
 * :green_heart: [OpenLineage](https://github.com/OpenLineage/OpenLineage) :green_heart:
 * :green_heart: [Pandas](https://github.com/pandas-dev/pandas) :green_heart:
 
+## Contributing:
+I have not created any sort of contribution guide yet, but I don't want that to stop anyone!
+If you are interested in contributing, fork this repository and open a PR. As this becomes more feature-rich/useful, we will establish a contributors workflow. For now, please just use the pre-commit hooks.
+
 ## Notes:
 * The pandas-lineage directory structure (for now) will mirror the directory structure of pandas for the components that it is extending.
