@@ -1,5 +1,5 @@
 # pandas-lineage Example using Marquez
-![Alt text](../docs/assets/images/marquez-example-1-ui-output.png)
+![Alt text](../../docs/assets/images/marquez-example-1-ui-output.png)
 
 ## Instructions:
 1. start marquez using the helper script `start_marquez.sh`
