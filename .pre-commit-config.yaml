@@ -37,7 +37,6 @@ repos:
   - id: black
     args:
       - --line-length=160
-      - --skip-string-normalization
 
 # isort
 - repo: https://github.com/pycqa/isort
