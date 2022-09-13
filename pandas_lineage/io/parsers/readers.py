@@ -13,19 +13,16 @@ inspect.getmodule(pandas.read_csv)
 from typing import Optional, Union
 from uuid import uuid4
 
-from openlineage.client import OpenLineageClient
-from pandas_lineage.types import JobRun, PandasDataSet
 from pandas import read_csv as pandas_read_csv
 from pandas._typing import FilePath, ReadCsvBuffer
 
+from pandas_lineage.types.lineage import JobRun, PandasDataSet
+from pandas_lineage.types.pandas import LineageDataFrame
+
 
 def read_csv(
-    filepath_or_buffer: Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]],
-    job_run: Optional[JobRun] = None,
-    dataset_name=None,
-    *args,
-    **kwargs
-):
+    filepath_or_buffer: Union[FilePath, ReadCsvBuffer[bytes], ReadCsvBuffer[str]], job_run: Optional[JobRun] = None, dataset_name=None, *args, **kwargs
+) -> LineageDataFrame:
     """
     TODO
     """
@@ -40,13 +37,9 @@ def read_csv(
         if isinstance(filepath_or_buffer, str):
             dataset_name = filepath_or_buffer
         else:
-            raise TypeError(
-                "filepath_or_buffer must be supplies as a string path or dataset_name is required"
-            )
+            raise TypeError("filepath_or_buffer must be supplied as a string path or dataset_name is required")
 
     dataframe = pandas_read_csv(filepath_or_buffer, *args, **kwargs)
-    openlineage_dataset = PandasDataSet.from_pandas(
-        dataframe=dataframe, dataset_name=dataset_name, job_run=job_run
-    )
+    openlineage_dataset = PandasDataSet.from_pandas(dataframe=dataframe, dataset_name=dataset_name, job_run=job_run)
     openlineage_dataset.emit_input()
-    return dataframe
+    return LineageDataFrame(dataframe)

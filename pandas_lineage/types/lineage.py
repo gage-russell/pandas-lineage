@@ -1,5 +1,5 @@
 """
-Module containing custom types related to pandas_lineage
+Module containing custom types related to OpenLineage events
 
 Example dataset usage from core openlineage
 
@@ -13,15 +13,12 @@ client.emit(download)
 
 ***formated with Black***
 """
+import copy
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import List
-import copy
 
-from pandas import DataFrame as PandasDataFrame
-from openlineage.client.run import Job, Run, RunEvent, RunState, InputDataset, Dataset
 from openlineage.client import OpenLineageClient
-from openlineage.client.utils import RedactMixin
 from openlineage.client.facet import (
     BaseFacet,
     DataSourceDatasetFacet,
@@ -29,6 +26,9 @@ from openlineage.client.facet import (
     SchemaDatasetFacet,
     SchemaField,
 )
+from openlineage.client.run import Dataset, InputDataset, Job, Run, RunEvent, RunState
+from openlineage.client.utils import RedactMixin
+from pandas import DataFrame as PandasDataFrame
 
 
 @dataclass
@@ -50,13 +50,7 @@ class JobRun:
         self.client = OpenLineageClient()
 
     def _emit(self, **kwargs):
-        event = RunEvent(
-            eventTime=datetime.now().isoformat(),
-            run=self.run,
-            job=self.job,
-            producer=self.producer,
-            **kwargs
-        )
+        event = RunEvent(eventTime=datetime.now().isoformat(), run=self.run, job=self.job, producer=self.producer, **kwargs)
         return self.client.emit(event)
 
     def emit_start(self):
@@ -80,36 +74,17 @@ class PandasDataSet(Dataset):
     TODO:
     """
 
-    def __init__(
-        self, dataset_name: str, job_run: JobRun, facets: dict = {}, *args, **kwargs
-    ):
-        super().__init__(
-            namespace=job_run.namespace,
-            name=dataset_name,
-            facets=facets,
-            *args,
-            **kwargs
-        )
+    def __init__(self, dataset_name: str, job_run: JobRun, facets: dict = {}, *args, **kwargs):
+        super().__init__(namespace=job_run.namespace, name=dataset_name, facets=facets, *args, **kwargs)
         self._job_run = job_run
 
     @classmethod
-    def from_pandas(
-        cls,
-        dataframe: PandasDataFrame,
-        dataset_name: str,
-        job_run: JobRun,
-        facets: dict = {},
-        *args,
-        **kwargs
-    ):
+    def from_pandas(cls, dataframe: PandasDataFrame, dataset_name: str, job_run: JobRun, facets: dict = {}, *args, **kwargs):
         """
         TODO
         create openlineage Dataset from pandas DataFrame
         """
-        schema_fields = [
-            SchemaField(name, dtype.name)
-            for name, dtype in dataframe.dtypes.to_dict().items()
-        ]
+        schema_fields = [SchemaField(name, dtype.name) for name, dtype in dataframe.dtypes.to_dict().items()]
         facets.update({"schema": SchemaDatasetFacet(fields=schema_fields)})
         return cls(dataset_name=dataset_name, job_run=job_run, facets=facets, *args, **kwargs)  # type: ignore
 

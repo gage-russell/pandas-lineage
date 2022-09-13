@@ -32,6 +32,16 @@ repos:
 
 # black
 - repo: https://github.com/ambv/black
-  rev: stable
+  rev: 22.8.0
   hooks:
   - id: black
+    args:
+      - --line-length=160
+
+# isort
+- repo: https://github.com/pycqa/isort
+  rev: 5.10.1
+  hooks:
+    - id: isort
+      name: isort (python)
+      args: ["--profile", "black", "--filter-files"]

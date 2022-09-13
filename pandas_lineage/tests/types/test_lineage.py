@@ -1,11 +1,12 @@
 """
-unit tests for types module
+unit tests for pandas_lineage.types.lineage module
 """
-import pytest
 from uuid import uuid4
 
+import pytest
 from openlineage.client.run import RunEvent
-from pandas_lineage import types
+
+from pandas_lineage.types import lineage
 
 
 class MockOpenLineageClient:
@@ -16,9 +17,7 @@ class MockOpenLineageClient:
 
 @pytest.fixture
 def mock_job_run():
-    job_run = types.JobRun(
-        run_id=uuid4().hex, namespace="test-namespace", name="test-name"
-    )
+    job_run = lineage.JobRun(run_id=uuid4().hex, namespace="test-namespace", name="test-name")
     job_run.client = MockOpenLineageClient()
     return job_run
 
