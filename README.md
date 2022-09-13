@@ -1,8 +1,11 @@
 # pandas-lineage
-
 BEWARE: This project is in very early stages (as of 2022-09-12)
 
 pandas-lineage is intended to extend the functionality of I/O and standard transform operations on a pandas dataframe to emit OpenLineage RunEvents. I am starting just with read/write operations emiting RunEvents with schema facets.
+
+## Badges:
+![python-package](https://github.com/gage-russell/pandas-lineage/actions/workflows/python-package.yml/badge.svg)
+
 
 ## Examples:
 * [marquez-examples](examples/marquez-example/)
