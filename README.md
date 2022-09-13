@@ -6,12 +6,16 @@ pandas-lineage is intended to extend the functionality of I/O and standard trans
 ## Badges:
 ![python-package](https://github.com/gage-russell/pandas-lineage/actions/workflows/python-package.yml/badge.svg)
 
-
 ## Examples:
 * [marquez-examples](examples/marquez-example/)
   * contains getting started code and a script for running Marquez locally in Docker
 * [mock-api-example](examples/mock-api-example)
   * contains getting started code and a simple Flask API for sending lineage events to which will just always return a 200 status code
+
+## References:
+* :green_heart: [Marquez](https://github.com/MarquezProject/marquez) :green_heart:
+* :green_heart: [OpenLineage](https://github.com/OpenLineage/OpenLineage) :green_heart:
+* :green_heart: [Pandas](https://github.com/pandas-dev/pandas) :green_heart:
 
 ## Notes:
 * The pandas-lineage directory structure (for now) will mirror the directory structure of pandas for the components that it is extending.
