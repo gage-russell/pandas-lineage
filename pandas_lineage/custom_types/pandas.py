@@ -9,6 +9,7 @@ from pandas import Series as PandasSeries
 from pandas._typing import FilePath, WriteBuffer
 
 from pandas_lineage.custom_types.lineage import JobRun, PandasDataSet
+from pandas_lineage.decorators import lineage_write
 
 
 class LineageSeries(PandasSeries):
@@ -47,6 +48,15 @@ class LineageDataFrame(PandasDataFrame):
         """
         return LineageSeries
 
+    @lineage_write(
+        dataframe_arg=0,
+        filepath_kwarg="path_or_buf",
+        filepath_arg=1,
+        job_run_kwarg="job_run",
+        job_run_arg=2,
+        dataset_name_kwarg="dataset_name",
+        dataset_name_arg=3,
+    )
     def to_csv(
         self,
         path_or_buf: Optional[Union[FilePath, WriteBuffer[bytes], WriteBuffer[str]]] = None,
@@ -61,17 +71,4 @@ class LineageDataFrame(PandasDataFrame):
         references:
         * https://github.com/pandas-dev/pandas/blob/main/pandas/io/formats/csvs.py
         """
-        # TODO: some of this boilerplate lineage event emitting code might get repetitive. Might a decorator save us code duplication?
-        if not job_run:
-            job_run = JobRun(run_id=uuid4().hex, namespace="pandas", name="empty")
-
-        if not dataset_name:
-            if isinstance(path_or_buf, str):
-                dataset_name = path_or_buf
-            else:
-                raise TypeError("path_or_buf must be supplied as a string path or dataset_name is required")
-
         super().to_csv(path_or_buf, *args, **kwargs)
-
-        openlineage_dataset = PandasDataSet.from_pandas(dataframe=self, dataset_name=dataset_name, job_run=job_run)
-        openlineage_dataset.emit_output()
