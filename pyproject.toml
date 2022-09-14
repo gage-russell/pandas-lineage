@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "pandas-lineage"
+version = "0.1.0"
+description = "A pandas extension built for OpenLineage"
+authors = ["Gage Russell <gage.russell.dev@gmail.com>"]
+license = "BSD 3-Clause License"
+readme = "README.md"
+packages = [{include = "pandas_lineage"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+openlineage-python = "0.13.1"
+pandas = "1.4.4"
+
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.1.3"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

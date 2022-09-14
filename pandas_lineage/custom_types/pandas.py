@@ -8,7 +8,7 @@ from pandas import DataFrame as PandasDataFrame
 from pandas import Series as PandasSeries
 from pandas._typing import FilePath, WriteBuffer
 
-from pandas_lineage.types.lineage import JobRun, PandasDataSet
+from pandas_lineage.custom_types.lineage import JobRun, PandasDataSet
 
 
 class LineageSeries(PandasSeries):

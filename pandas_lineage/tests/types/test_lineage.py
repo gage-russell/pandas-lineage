@@ -6,7 +6,7 @@ from uuid import uuid4
 import pytest
 from openlineage.client.run import RunEvent
 
-from pandas_lineage.types import lineage
+from pandas_lineage.custom_types import lineage
 
 
 class MockOpenLineageClient:

@@ -7,4 +7,4 @@
 2. install repo dependencies
    * `pip install -r ../requirements.txt`
 3. run `getting_started.py`
-   * `python getting_started.py`
+   * `python marquez_example.py`

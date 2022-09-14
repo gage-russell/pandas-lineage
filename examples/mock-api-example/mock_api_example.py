@@ -11,7 +11,7 @@ python getting_started.py
 from uuid import uuid4
 
 from pandas_lineage import read_csv
-from pandas_lineage.types import JobRun
+from pandas_lineage.custom_types.lineage import JobRun
 
 job_run = JobRun(run_id=uuid4().hex, namespace="test", name="test")
 start = job_run.emit_start()
