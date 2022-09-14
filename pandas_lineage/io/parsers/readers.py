@@ -16,8 +16,8 @@ from uuid import uuid4
 from pandas import read_csv as pandas_read_csv
 from pandas._typing import FilePath, ReadCsvBuffer
 
-from pandas_lineage.types.lineage import JobRun, PandasDataSet
-from pandas_lineage.types.pandas import LineageDataFrame
+from pandas_lineage.custom_types.lineage import JobRun, PandasDataSet
+from pandas_lineage.custom_types.pandas import LineageDataFrame
 
 
 def read_csv(
