@@ -2,9 +2,9 @@
 ![Alt text](../../docs/assets/images/marquez-example-1-ui-output.png)
 
 ## Instructions:
-1. start marquez using the helper script `start_marquez.sh`
+1. install pandas-lineage
+   * `pip install pandas-lineage`
+2. start marquez using the helper script `start_marquez.sh`
    * `source ./start_marquez.sh`
-2. install repo dependencies
-   * `pip install -r ../requirements.txt`
 3. run `getting_started.py`
    * `python marquez_example.py`
