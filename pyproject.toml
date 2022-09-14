@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pandas-lineage"
-version = "0.1.0"
+version = "0.0.1"
 description = "A pandas extension built for OpenLineage"
 authors = ["Gage Russell <gage.russell.dev@gmail.com>"]
 license = "BSD 3-Clause License"
