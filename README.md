@@ -6,6 +6,9 @@ pandas-lineage is intended to extend the functionality of I/O and standard trans
 ## Badges:
 ![python-package](https://github.com/gage-russell/pandas-lineage/actions/workflows/python-package.yml/badge.svg)
 
+## Installation
+`pip install pandas-lineage`
+
 ## Examples:
 * [marquez-examples](examples/marquez-example/)
   * contains getting started code and a script for running Marquez locally in Docker
