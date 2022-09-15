@@ -17,7 +17,7 @@ from pandas._typing import FilePath, ReadCsvBuffer
 
 from pandas_lineage.custom_types.lineage import JobRun, PandasDataSet
 from pandas_lineage.custom_types.pandas import LineageDataFrame
-from pandas_lineage.decorators import lineage_read
+from pandas_lineage.decorators.input import lineage_read
 
 
 @lineage_read(

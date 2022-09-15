@@ -3,7 +3,7 @@ import logging
 logger = logging.getLogger()
 
 
-EMISSION_ERROR_STR = "WARNING: Request Error: failed to emit lineage event: {e}"
+EMISSION_ERROR_STR = "WARNING: Request Error: failed to emit lineage event: {message}"
 
 
 class LineageEmissionError(Exception):

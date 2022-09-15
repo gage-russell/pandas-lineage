@@ -2,14 +2,13 @@
 Module containing custom types related to pandas
 """
 from typing import Optional, Union
-from uuid import uuid4
 
 from pandas import DataFrame as PandasDataFrame
 from pandas import Series as PandasSeries
 from pandas._typing import FilePath, WriteBuffer
 
 from pandas_lineage.custom_types.lineage import JobRun, PandasDataSet
-from pandas_lineage.decorators import lineage_write
+from pandas_lineage.decorators.output import lineage_write
 
 
 class LineageSeries(PandasSeries):

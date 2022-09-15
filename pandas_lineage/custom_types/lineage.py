@@ -53,11 +53,12 @@ class JobRun:
     def _emit(self, **kwargs):
         event = RunEvent(eventTime=datetime.now().isoformat(), run=self.run, job=self.job, producer=self.producer, **kwargs)
         try:
-            self.client.emit(event)
+            emission = self.client.emit(event)
+            return emission
         except (HTTPError, ConnectionError) as e:
             silenceable_failure(
                 silenced=self.silence_lineage_failures,
-                message=EMISSION_ERROR_STR.format(e),
+                message=EMISSION_ERROR_STR.format(message=e),
                 error_type=LineageEmissionError,
             )
 
