@@ -15,7 +15,7 @@ from typing import Optional, Union
 from pandas import read_csv as pandas_read_csv
 from pandas._typing import FilePath, ReadCsvBuffer
 
-from pandas_lineage.custom_types.lineage import JobRun, PandasDataSet
+from pandas_lineage.custom_types.lineage import JobRun
 from pandas_lineage.custom_types.pandas import LineageDataFrame
 from pandas_lineage.decorators.input import lineage_read
 
