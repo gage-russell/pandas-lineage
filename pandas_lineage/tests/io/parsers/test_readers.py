@@ -1,18 +1,15 @@
+from os.path import abspath, dirname
 from pathlib import Path
-from os.path import dirname, abspath
-import pytest
-
 from uuid import uuid4
 
 import pandas
+import pytest
 
 from pandas_lineage import read_csv
-from pandas_lineage.custom_types.lineage import JobRun
 from pandas_lineage.custom_types import lineage
+from pandas_lineage.custom_types.lineage import JobRun
 
-
-
-DATA_PATH = Path(dirname(dirname(dirname(abspath(__file__))))) / Path('data')
+DATA_PATH = Path(dirname(dirname(dirname(abspath(__file__))))) / Path("data")
 
 
 class MockOpenLineageClient:
@@ -28,7 +25,7 @@ def mock_job_run():
     return job_run
 
 
-@pytest.mark.parametrize('path, expected', [('abc123_dataframe.csv', True), ('null_abc123_dataframe', True)])
+@pytest.mark.parametrize("path, expected", [("abc123_dataframe.csv", True), ("null_abc123_dataframe", True)])
 def test_read_csv_abc123_data(path, expected, caplog):
     print(caplog.text)
     _path = DATA_PATH / Path(path)
