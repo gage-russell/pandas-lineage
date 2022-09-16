@@ -24,3 +24,6 @@ Dependencies for this project are intended to be managed using poetry.
 * add docs dependency
   * `poetry add <package-name> --group docs`
   * `poetry export --output docs-requirements.txt --with docs`
+* add optional dependency
+  * `poetry add <package-name> --group optional`
+  * `poetry export --output optional-requirements.txt --with optional`

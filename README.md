@@ -9,6 +9,11 @@ pandas-lineage is intended to extend the functionality of I/O and standard trans
 ## Installation
 `pip install pandas-lineage`
 
+## Development Documentation
+* [dependency-management](docs/dependency-management.md)
+* [publishing](docs/publishing.md)
+* [testing](docs/testing.md)
+
 ## Examples:
 * [marquez-examples](examples/marquez-example/)
   * contains getting started code and a script for running Marquez locally in Docker
