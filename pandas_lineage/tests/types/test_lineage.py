@@ -25,6 +25,5 @@ def mock_job_run():
 # TODO: turn into test classes to mirror module classes
 def test_JobRun_emit_start(mock_job_run):
     start = mock_job_run.emit_start()
-    print(start)
     assert isinstance(start["args"][0], RunEvent)
     assert start["args"][0].job.name == "test-name"
