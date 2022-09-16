@@ -1,6 +1,8 @@
-from typing import Any, Dict, List
+from pathlib import Path
+from typing import Any, Dict, List, Union
 
 from pandas import DataFrame as PandasDataFrame
+from pandas._typing import FilePath
 from requests.exceptions import ConnectionError, HTTPError  # type: ignore
 
 from pandas_lineage.convention.error_handling import (
@@ -21,10 +23,10 @@ def identify_argumet(kwargs: Dict[str, Any], kwarg_name: str, args: List[Any], a
     return _argument
 
 
-def check_emitability(job_run: JobRun, dataset_name: str, silence_lineage_failures: bool):
+def check_emitability(job_run: JobRun, dataset_name: Union[str, Path], silence_lineage_failures: bool):
     should_emit = True
-    if not isinstance(dataset_name, str):
-        silenceable_failure(silenced=silence_lineage_failures, message=f"dataset_name expected <str>; received {type(dataset_name)}", error_type=TypeError)
+    if not isinstance(dataset_name, (str, Path)):
+        silenceable_failure(silenced=silence_lineage_failures, message=f"dataset_name expected {FilePath}; received {type(dataset_name)}", error_type=TypeError)
         should_emit = False
 
     if not job_run:
