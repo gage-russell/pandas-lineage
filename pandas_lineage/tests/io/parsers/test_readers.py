@@ -46,6 +46,14 @@ def test_read_csv_abc123_data_invalid_http(path, caplog, mock_job_run):
     assert "Request Error: failed to emit lineage event" in caplog.text
 
 
+@pytest.mark.parametrize("path", [("abc123_dataframe.csv"), ("null_abc123_dataframe.csv")])
+def test_read_csv_abc123_data(path, mock_job_run):
+    _path = DATA_PATH / Path(path)
+    test_df = read_csv(_path, job_run=mock_job_run)
+    expected_df = pandas.read_csv(_path)
+    assert test_df.equals(expected_df)
+
+
 @pytest.mark.parametrize("path", [("abc123_dataframe.snappy.parquet")])
 def test_read_parquet_abc123_data(path, mock_job_run):
     _path = DATA_PATH / Path(path)
