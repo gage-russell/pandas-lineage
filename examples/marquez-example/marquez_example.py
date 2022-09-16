@@ -10,15 +10,21 @@ python getting_started.py
 
 from uuid import uuid4
 
-from pandas_lineage import read_csv
-from pandas_lineage.custom_types.lineage import JobRun
+import pandas
+
+from pandas_lineage import JobRun, read_csv, read_parquet
 
 # run 1
 job_run = JobRun(run_id=uuid4().hex, namespace="marquez-examples", name="marquez-example-1")
 start = job_run.emit_start()
 
-input_1 = read_csv("./mock_csv.csv", dataset_name="input_dataset_1", job_run=job_run)
-output_1 = input_1.dropna(how="all", axis=1)
-output_1.to_csv("./test.csv", dataset_name="output_dataset_1", job_run=job_run)
+csv_input_1 = read_csv("./mock_csv.csv", dataset_name="csv_input_dataset_1", job_run=job_run)
+parquet_input_2 = read_parquet("./mock_parquet.snappy.parquet", dataset_name="parquet_input_dataset_2", job_run=job_run)
+
+csv_output_1 = csv_input_1.dropna(how="all", axis=1)
+parquet_output_2 = pandas.concat([csv_output_1, parquet_input_2])
+
+csv_output_1.to_csv("./test.csv", dataset_name="csv_output_dataset_1", job_run=job_run)
+parquet_output_2.to_parquet("./test.snappy.parquet", dataset_name="parquet_output_dataset_2", job_run=job_run)
 
 complete = job_run.emit_complete()

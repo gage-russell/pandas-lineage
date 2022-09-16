@@ -7,7 +7,7 @@ from pandas import DataFrame as PandasDataFrame
 from pandas import Series as PandasSeries
 from pandas._typing import FilePath, WriteBuffer
 
-from pandas_lineage.custom_types.lineage import JobRun, PandasDataSet
+from pandas_lineage.custom_types.lineage import JobRun
 from pandas_lineage.decorators.output import lineage_write
 
 
@@ -50,11 +50,6 @@ class LineageDataFrame(PandasDataFrame):
     @lineage_write(
         dataframe_arg=0,
         filepath_kwarg="path_or_buf",
-        filepath_arg=1,
-        job_run_kwarg="job_run",
-        job_run_arg=2,
-        dataset_name_kwarg="dataset_name",
-        dataset_name_arg=3,
     )
     def to_csv(
         self,
@@ -65,9 +60,18 @@ class LineageDataFrame(PandasDataFrame):
         **kwargs
     ) -> None:
         """
-        extending the functionality of pandas.DataFrame.to_csv to emit lineage events
-        TODO: is there a more central I/O code location in pandas such that we don't have to override each format?
-        references:
-        * https://github.com/pandas-dev/pandas/blob/main/pandas/io/formats/csvs.py
+        Mirrors pandas.DataFrame.to_parquet functionality with OpenLineage RunEvent emission
         """
         super().to_csv(path_or_buf, *args, **kwargs)
+
+    @lineage_write(
+        dataframe_arg=0,
+        filepath_kwarg="path",
+    )
+    def to_parquet(
+        self, path: Optional[Union[FilePath, WriteBuffer[bytes]]] = None, job_run: Optional[JobRun] = None, dataset_name=None, *args, **kwargs
+    ) -> None:
+        """
+        Mirrors pandas.DataFrame.to_parquet functionality with OpenLineage RunEvent emission
+        """
+        super().to_parquet(path, *args, **kwargs)
