@@ -5,6 +5,7 @@ pandas-lineage is intended to extend the functionality of I/O and standard trans
 
 ## Badges:
 [![python-package](https://github.com/gage-russell/pandas-lineage/actions/workflows/python-package.yml/badge.svg)](https://github.com/gage-russell/pandas-lineage/actions/workflows/python-package.yml)
+[![pypi](https://img.shields.io/pypi/v/pandas-lineage)](https://pypi.org/project/pandas-lineage/)
 
 ## Installation
 `pip install pandas-lineage`
