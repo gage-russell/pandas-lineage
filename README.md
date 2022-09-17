@@ -4,7 +4,8 @@ BEWARE: This project is in very early stages (as of 2022-09-12)
 pandas-lineage is intended to extend the functionality of I/O and standard transform operations on a pandas dataframe to emit OpenLineage RunEvents. I am starting just with read/write operations emiting RunEvents with schema facets.
 
 ## Badges:
-![python-package](https://github.com/gage-russell/pandas-lineage/actions/workflows/python-package.yml/badge.svg)
+[![python-package](https://github.com/gage-russell/pandas-lineage/actions/workflows/python-package.yml/badge.svg)](https://github.com/gage-russell/pandas-lineage/actions/workflows/python-package.yml)
+[![pypi](https://img.shields.io/pypi/v/pandas-lineage)](https://pypi.org/project/pandas-lineage/)
 
 ## Installation
 `pip install pandas-lineage`
