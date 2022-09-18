@@ -2,13 +2,13 @@
 Module containing custom types related to pandas
 """
 from typing import Optional, Union
-from uuid import uuid4
 
 from pandas import DataFrame as PandasDataFrame
 from pandas import Series as PandasSeries
 from pandas._typing import FilePath, WriteBuffer
 
-from pandas_lineage.custom_types.lineage import JobRun, PandasDataSet
+from pandas_lineage.custom_types.lineage import JobRun
+from pandas_lineage.decorators.output import lineage_write
 
 
 class LineageSeries(PandasSeries):
@@ -47,6 +47,10 @@ class LineageDataFrame(PandasDataFrame):
         """
         return LineageSeries
 
+    @lineage_write(
+        dataframe_arg=0,
+        filepath_kwarg="path_or_buf",
+    )
     def to_csv(
         self,
         path_or_buf: Optional[Union[FilePath, WriteBuffer[bytes], WriteBuffer[str]]] = None,
@@ -56,22 +60,30 @@ class LineageDataFrame(PandasDataFrame):
         **kwargs
     ) -> None:
         """
-        extending the functionality of pandas.DataFrame.to_csv to emit lineage events
-        TODO: is there a more central I/O code location in pandas such that we don't have to override each format?
-        references:
-        * https://github.com/pandas-dev/pandas/blob/main/pandas/io/formats/csvs.py
+        Mirrors pandas.DataFrame.to_parquet functionality with OpenLineage RunEvent emission
         """
-        # TODO: some of this boilerplate lineage event emitting code might get repetitive. Might a decorator save us code duplication?
-        if not job_run:
-            job_run = JobRun(run_id=uuid4().hex, namespace="pandas", name="empty")
-
-        if not dataset_name:
-            if isinstance(path_or_buf, str):
-                dataset_name = path_or_buf
-            else:
-                raise TypeError("path_or_buf must be supplied as a string path or dataset_name is required")
-
         super().to_csv(path_or_buf, *args, **kwargs)
 
-        openlineage_dataset = PandasDataSet.from_pandas(dataframe=self, dataset_name=dataset_name, job_run=job_run)
-        openlineage_dataset.emit_output()
+    @lineage_write(
+        dataframe_arg=0,
+        filepath_kwarg="path",
+    )
+    def to_parquet(
+        self, path: Optional[Union[FilePath, WriteBuffer[bytes]]] = None, job_run: Optional[JobRun] = None, dataset_name=None, *args, **kwargs
+    ) -> None:
+        """
+        Mirrors pandas.DataFrame.to_parquet functionality with OpenLineage RunEvent emission
+        """
+        super().to_parquet(path, *args, **kwargs)
+
+    @lineage_write(
+        dataframe_arg=0,
+        filepath_kwarg="path_or_buf",
+    )
+    def to_json(
+        self, path_or_buf: Optional[Union[FilePath, WriteBuffer[bytes]]] = None, job_run: Optional[JobRun] = None, dataset_name=None, *args, **kwargs
+    ) -> None:
+        """
+        Mirrors pandas.DataFrame.to_json functionality with OpenLineage RunEvent emission
+        """
+        super().to_json(path_or_buf, *args, **kwargs)

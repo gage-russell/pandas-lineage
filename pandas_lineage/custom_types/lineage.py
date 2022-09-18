@@ -19,16 +19,16 @@ from datetime import datetime
 from typing import List
 
 from openlineage.client import OpenLineageClient
-from openlineage.client.facet import (
-    BaseFacet,
-    DataSourceDatasetFacet,
-    DocumentationDatasetFacet,
-    SchemaDatasetFacet,
-    SchemaField,
-)
-from openlineage.client.run import Dataset, InputDataset, Job, Run, RunEvent, RunState
-from openlineage.client.utils import RedactMixin
+from openlineage.client.facet import SchemaDatasetFacet, SchemaField
+from openlineage.client.run import Dataset, Job, Run, RunEvent, RunState
 from pandas import DataFrame as PandasDataFrame
+from requests.exceptions import ConnectionError, HTTPError  # type: ignore
+
+from pandas_lineage.convention.error_handling import (
+    EMISSION_ERROR_STR,
+    LineageEmissionError,
+    silenceable_failure,
+)
 
 
 @dataclass
@@ -43,6 +43,7 @@ class JobRun:
     producer: str = "pandas-lineage"
     run_facets: dict = field(default_factory=dict)
     job_facets: dict = field(default_factory=dict)
+    silence_lineage_failures: bool = True
 
     def __post_init__(self):
         self.run = Run(runId=self.run_id, facets=self.run_facets)
@@ -51,7 +52,15 @@ class JobRun:
 
     def _emit(self, **kwargs):
         event = RunEvent(eventTime=datetime.now().isoformat(), run=self.run, job=self.job, producer=self.producer, **kwargs)
-        return self.client.emit(event)
+        try:
+            emission = self.client.emit(event)
+            return emission
+        except (HTTPError, ConnectionError) as e:
+            silenceable_failure(
+                silenced=self.silence_lineage_failures,
+                message=EMISSION_ERROR_STR.format(message=e),
+                error_type=LineageEmissionError,
+            )
 
     def emit_start(self):
         return self._emit(eventType=RunState.START)
