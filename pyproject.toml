@@ -3,7 +3,7 @@ name = "pandas-lineage"
 version = "0.0.2"
 description = "A pandas extension built for OpenLineage"
 authors = ["Gage Russell <gage.russell.dev@gmail.com>"]
-license = "BSD 3-Clause License"
+license = "Apache-2.0"
 readme = "README.md"
 packages = [{include = "pandas_lineage"}]
 
