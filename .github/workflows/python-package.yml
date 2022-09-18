@@ -28,6 +28,6 @@ jobs:
         with:
           poetry-version: ${{ matrix.poetry-version }}
       - name: Package
-        run: poetry install --with dev
+        run: poetry install --with dev -E parquet
       - name: test
         run: poetry run pytest ./tests
