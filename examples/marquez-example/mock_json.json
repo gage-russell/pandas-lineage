@@ -1,0 +1,5 @@
+[
+    {"col1": [1, 2, 3], "col2": {"nested21": [1, 2, 3], "nested22": "string2"}, "col3": "string3"},
+    {"col1": [1, 2, 3], "col2": {"nested21": [1, 2, 3], "nested22": "string2"}, "col3": "string3"},
+    {"col1": [1, 2, 3], "col2": {"nested21": [1, 2, 3], "nested22": "string2"}, "col3": "string3"}
+]

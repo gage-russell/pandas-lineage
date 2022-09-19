@@ -75,3 +75,16 @@ class LineageDataFrame(PandasDataFrame):
         Mirrors pandas.DataFrame.to_parquet functionality with OpenLineage RunEvent emission
         """
         super().to_parquet(path, *args, **kwargs)
+
+
+    @lineage_write(
+        dataframe_arg=0,
+        filepath_kwarg="path_or_buf",
+    )
+    def to_json(
+        self, path_or_buf: Optional[Union[FilePath, WriteBuffer[bytes]]] = None, job_run: Optional[JobRun] = None, dataset_name=None, *args, **kwargs
+    ) -> None:
+        """
+        Mirrors pandas.DataFrame.to_json functionality with OpenLineage RunEvent emission
+        """
+        super().to_json(path_or_buf, *args, **kwargs)

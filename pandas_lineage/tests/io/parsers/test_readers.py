@@ -7,7 +7,7 @@ from uuid import uuid4
 import pandas
 import pytest
 
-from pandas_lineage import read_csv, read_parquet
+from pandas_lineage import read_csv, read_parquet, read_json
 from pandas_lineage.custom_types import lineage
 
 DATA_PATH = Path(dirname(dirname(dirname(abspath(__file__))))) / Path("data")
@@ -59,4 +59,12 @@ def test_read_parquet_abc123_data(path, mock_job_run):
     _path = DATA_PATH / Path(path)
     test_df = read_parquet(_path, job_run=mock_job_run)
     expected_df = pandas.read_parquet(_path)
+    assert test_df.equals(expected_df)
+
+
+@pytest.mark.parametrize("path", [("abc123_dataframe.snappy.parquet")])
+def test_read_json_abc123_data(path, mock_job_run):
+    _path = DATA_PATH / Path(path)
+    test_df = read_json(_path, job_run=mock_job_run)
+    expected_df = pandas.read_json(_path)
     assert test_df.equals(expected_df)
