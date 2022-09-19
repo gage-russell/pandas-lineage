@@ -15,6 +15,7 @@ from typing import Optional, Union
 
 from pandas import read_csv as pandas_read_csv
 from pandas import read_parquet as pandas_read_parquet
+from pandas import read_json as pandas_read_json
 from pandas._typing import FilePath, ReadCsvBuffer
 
 from pandas_lineage.custom_types.lineage import JobRun
@@ -45,4 +46,16 @@ def read_parquet(path: Union[str, Path], job_run: Optional[JobRun] = None, datas
     Mirrors pandas.raed_parquet functionality with OpenLineage RunEvent emission
     """
     dataframe = pandas_read_parquet(path, *args, **kwargs)
+    return dataframe
+
+
+@lineage_read(
+    filepath_kwarg="path_or_buf",
+    filepath_arg=0,
+)
+def read_json(path_or_buf: Union[str, Path], job_run: Optional[JobRun] = None, dataset_name=None, *args, **kwargs) -> LineageDataFrame:
+    """
+    Mirrors pandas.raed_json functionality with OpenLineage RunEvent emission
+    """
+    dataframe = pandas_read_json(path_or_buf, *args, **kwargs)
     return dataframe
